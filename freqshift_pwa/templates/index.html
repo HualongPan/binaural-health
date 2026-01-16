@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Binaural Health</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#667eea" />
+  <link rel="icon" href="/static/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/static/icons/icon-192.png" />
+
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 680px;
+      width: 100%;
+      padding: 56px 40px;
+      text-align: center;
+    }
+    .header { margin-bottom: 34px; }
+    .title {
+      font-size: 2.25em;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 1.05em;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    .description {
+      font-size: 0.95em;
+      color: #888;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+    .info-box {
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+      padding: 14px 14px;
+      border-radius: 10px;
+      text-align: left;
+      margin-bottom: 18px;
+      font-size: 0.92em;
+      color: #555;
+    }
+    .info-box strong { color: #667eea; }
+    .error {
+      background: #fff0f0;
+      border-left: 4px solid #d14343;
+      padding: 14px;
+      border-radius: 10px;
+      text-align: left;
+      margin-bottom: 18px;
+      font-size: 0.95em;
+      color: #7a1e1e;
+    }
+    .form-group {
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 1em;
+    }
+    input[type="file"] { display: none; }
+    .file-label {
+      display: block;
+      padding: 18px;
+      background: #f0f4ff;
+      border: 2.5px dashed #667eea;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 500;
+      color: #667eea;
+      text-align: center;
+    }
+    .file-label:hover {
+      background: #e8ecff;
+      border-color: #764ba2;
+      color: #764ba2;
+    }
+    .shift-input-group {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    input[type="number"] {
+      flex: 1;
+      padding: 12px 14px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1em;
+      transition: border-color 0.2s;
+    }
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .unit { color: #666; font-weight: 500; min-width: 36px; }
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    button[type="submit"],
+    button[type="reset"] {
+      flex: 1;
+      padding: 14px 18px;
+      font-size: 1.05em;
+      font-weight: 650;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    button[type="submit"] {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.35);
+    }
+    button[type="reset"] {
+      background: #f0f0f0;
+      color: #333;
+    }
+    button[type="reset"]:hover { background: #e5e5e5; }
+
+    .result-section {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 2px solid #f0f0f0;
+    }
+    .result-title {
+      font-size: 1.25em;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 650;
+    }
+    .plyr { margin-top: 14px; border-radius: 12px; overflow: hidden; }
+    .plyr__controls {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 14px;
+    }
+    .plyr--audio { background: #f5f5f5; }
+
+    .player-info {
+      background: #f0f4ff;
+      border: 2px solid #667eea;
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 16px;
+      text-align: center;
+    }
+    .channel-info {
+      display: flex;
+      gap: 14px;
+      margin-top: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .channel {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px;
+      background: white;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+    }
+    .channel.right { border-left-color: #764ba2; }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 0.9em;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #fafafa;
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .download-btn:hover {
+      background: #f0f4ff;
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    @media (max-width: 520px) {
+      .container { padding: 46px 22px; }
+      .title { font-size: 1.85em; }
+      .button-group { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">🎵 Frequency Shift Processor</h1>
+      <p class="subtitle">Stereo output: Left = Original, Right = Shifted</p>
+      <p class="description">
+        Upload a WAV file and choose a frequency shift value. The app generates a stereo WAV where the
+        right channel is shifted upward by +Δf Hz using a Hilbert analytic-signal method.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <strong>Tip:</strong> Use headphones to compare left vs right. The app applies a low-pass guard band
+      before shifting to reduce aliasing near Nyquist.
+    </div>
+
+    {% if error %}
+      <div class="error"><strong>Error:</strong> {{ error }}</div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Select WAV file</label>
+        <input type="file" name="file" accept=".wav" id="fileInput" required>
+        <label for="fileInput" class="file-label" id="fileLabel">📁 Click to select a WAV file or drag & drop</label>
+      </div>
+
+      <div class="form-group">
+        <label>Frequency shift amount</label>
+        <div class="shift-input-group">
+          <input type="number" name="shift" value="{{ shift_hz }}" step="0.1" min="0.1" max="2000">
+          <span class="unit">Hz</span>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit">Process Audio</button>
+        <button type="reset">Clear</button>
+      </div>
+    </form>
+
+    {% if audio_url %}
+    <div class="result-section">
+      <div class="result-title">✓ Processing complete</div>
+
+      <audio id="audio-player" playsinline controls>
+        <source src="{{ audio_url }}" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+
+      {% if download_url %}
+        <a class="download-btn" href="{{ download_url }}">⬇️ Download stereo WAV</a>
+      {% endif %}
+
+      <div class="player-info">
+        <strong style="font-size: 1.05em; display: block; margin-bottom: 8px;">Stereo channel information</strong>
+        <div class="channel-info">
+          <div class="channel">
+            <strong style="color: #667eea;">🔊 Left</strong><br>
+            Original audio<br>
+            <small>(unshifted)</small>
+          </div>
+          <div class="channel right">
+            <strong style="color: #764ba2;">🎯 Right</strong><br>
+            Frequency shifted<br>
+            <small>(+{{ shift_hz }} Hz)</small>
+          </div>
+        </div>
+        <p style="margin-top: 12px; color: #666; font-size: 0.9em;">
+          Use stereo headphones to hear both channels distinctly.
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="footer">
+      <span>© {{ app_name }}</span>
+      <span><a href="/privacy">Privacy Policy</a></span>
+    </div>
+  </div>
+
+  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <script>
+    // Plyr audio player
+    const player = new Plyr('#audio-player', {
+      controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'download'],
+      speed: { selected: 1, options: [0.75, 1, 1.25, 1.5] }
+    });
+
+    // Nice file label
+    const fileInput = document.getElementById('fileInput');
+    const fileLabel = document.getElementById('fileLabel');
+
+    fileInput?.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileLabel.textContent = '✓ ' + fileInput.files[0].name;
+        fileLabel.style.color = '#667eea';
+      }
+    });
+
+    // Drag and drop
+    fileLabel?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileLabel.style.background = '#e8ecff';
+    });
+    fileLabel?.addEventListener('dragleave', () => {
+      fileLabel.style.background = '#f0f4ff';
+    });
+    fileLabel?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileInput.files = e.dataTransfer.files;
+      fileLabel.style.background = '#f0f4ff';
+      if (fileInput.files.length > 0) {
+        fileLabel.textContent = '✓ ' + fileInput.files[0].name;
+        fileLabel.style.color = '#667eea';
+      }
+    });
+
+    // Register Service Worker for PWA installability
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+</body>
+</html>

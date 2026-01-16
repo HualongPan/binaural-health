@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Binaural Health - Privacy Policy</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #f6f7fb; color: #1b1b1b; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 36px 18px; }
+    .card { background: #fff; border-radius: 16px; padding: 28px 22px; box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
+    h1 { margin-top: 0; }
+    h2 { margin-top: 22px; }
+    p, li { line-height: 1.6; }
+    a { color: #4f46e5; }
+    .muted { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Privacy Policy</h1>
+      <p class="muted">Last updated: {{ ("now"|string) }}</p>
+
+      <p>
+        <strong>{{ app_name }}</strong> is an audio utility that processes WAV files to create a stereo output
+        (left channel: original; right channel: frequency-shifted).
+      </p>
+
+      <h2>Information we collect</h2>
+      <ul>
+        <li><strong>Uploaded audio files:</strong> The WAV file you upload is used only to generate your processed output.</li>
+        <li><strong>No account data:</strong> We do not require login, and we do not collect names, emails, or identifiers.</li>
+      </ul>
+
+      <h2>How we use your information</h2>
+      <ul>
+        <li>To process your audio request and return the output WAV file.</li>
+        <li>To display the audio in the built-in web player so you can preview the result.</li>
+      </ul>
+
+      <h2>Data storage & retention</h2>
+      <ul>
+        <li>Uploaded and processed files are stored temporarily on the server.</li>
+        <li>Files are automatically deleted after a short period (typically within ~1 hour).</li>
+      </ul>
+
+      <h2>Sharing</h2>
+      <p>We do not sell or share your uploaded audio with third parties.</p>
+
+      <h2>Security</h2>
+      <p>
+        We use standard web security practices. However, no online service can be guaranteed 100% secure.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        If you have questions, please add your contact email here before publishing.
+      </p>
+
+      <p style="margin-top: 28px;"><a href="/">← Back to app</a></p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "Binaural Health",
+  "short_name": "Binaural Health",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "description": "Generate binaural-style stereo audio by frequency-shifting one channel using Hilbert-based processing.",
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "music",
+    "utilities",
+    "productivity"
+  ]
+}
