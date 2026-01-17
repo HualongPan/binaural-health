@@ -25,4 +25,12 @@ and does **not** evaluate medical efficacy or health outcomes.
 ---
 
 ## Repository Structure
-
+/audio/ # Audio stimuli (binaural and control)
+/analysis/ # EEG processing and analysis scripts
+/data/ # Raw and processed EEG data (if included)
+/figures/ # Plots and visualizations
+METHODS.md
+ETHICS.md
+REPRODUCIBILITY.md
+DISCLAIMER.md
+README.md
