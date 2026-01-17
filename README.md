@@ -34,3 +34,9 @@ ETHICS.md
 REPRODUCIBILITY.md
 DISCLAIMER.md
 README.md
+## Documentation
+- [Methods](METHODS.md)
+- [Ethics](ETHICS.md)
+- [Reproducibility](REPRODUCIBILITY.md)
+- [Disclaimer](DISCLAIMER.md)
+
